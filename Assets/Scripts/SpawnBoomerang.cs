@@ -1,16 +1,44 @@
+using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
 using UnityEngine;
 
 public class SpawnBoomerang : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] Transform boomerangSpawnLoc, pinSpawnLoc;
+    [SerializeField] GameObject boomerangPrefab, pinPrefab;
+    [SerializeField] ScoreKeeper scoreKeeper;
+    [SerializeField] Button rangBtn, pinBtn;
+    GameObject currentRang;
+    private void Start()
     {
-        
+        SpawnRang();
+        SpawnPin();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void SpawnRang()
     {
-        
+        if(currentRang != null)
+        {
+            Destroy(currentRang);
+            currentRang = null;
+        }
+        if (boomerangPrefab != null && boomerangSpawnLoc != null)
+        {
+            currentRang = Instantiate(boomerangPrefab, boomerangSpawnLoc);
+            scoreKeeper.ResetScore();
+        }
+    }
+    public void SpawnPin()
+    {
+        if (pinPrefab != null && pinSpawnLoc != null)
+        {
+            Instantiate(pinPrefab,pinSpawnLoc);
+        }
+    }
+    void OnRangClick()
+    {
+        SpawnRang();
+    }
+    void OnPinClick()
+    {
+        SpawnPin();
     }
 }
