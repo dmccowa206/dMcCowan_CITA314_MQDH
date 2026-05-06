@@ -9,6 +9,7 @@ public class BoomerangMove : MonoBehaviour
     Rigidbody rb, rbOther;
     float t, rngTime;
     Vector3 delta1 = new Vector3(1, .5f, 1), delta2 = new Vector3(1, 0, 1);
+    bool loopCheck = false;
     private void Start()
     {
         scoreKeeper = FindAnyObjectByType<ScoreKeeper>();
@@ -19,13 +20,19 @@ public class BoomerangMove : MonoBehaviour
         if(isThrown)
         {
             this.gameObject.transform.Rotate(transform.up * spinSpd);
+            MoveEllipse();
         }
     }
     void MoveEllipse()
-    {
+    {   
+        Debug.Log("MoveEllipse");
         t += Time.deltaTime / rngTime;
         if (gameObject.transform.position == markEnd)
         {
+            if(loopCheck)
+            {
+                Fall();
+            }
             SetMarks();
         }
         Vector3 pointInCurve = 
@@ -36,9 +43,11 @@ public class BoomerangMove : MonoBehaviour
             Vector3.Lerp(
                 Vector3.Lerp(mark1, mark2, t),
                 Vector3.Lerp(mark2, markEnd, t), t), t);
+        gameObject.transform.position = pointInCurve;
     }
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log("Collision");
         if(other.gameObject.transform.parent.parent.gameObject.CompareTag("Pin"))
         {
             scoreKeeper.GainScore();
@@ -46,19 +55,25 @@ public class BoomerangMove : MonoBehaviour
             rbOther.isKinematic = false;
             Destroy(other.gameObject.transform.parent.parent.gameObject, 10f);
         }
+        else
+        {
+            Fall();
+        }
     }
-    void OnSelectEntered()
+    public void OnGrab()
     {
+        Debug.Log("Grab");
         t = 0;
         isThrown = false;
-        trajSet = false;
+        scoreKeeper.ResetElligibility();
     }
-    void OnSelectExited()
+    public void OnThrow()
     {
+        Debug.Log("Throw");
         isThrown = true;
+        rb.isKinematic = false;
         rngTime = Random.Range(1.0f, 3.0f);
-        trajectory = rb.linearVelocity;
-        SetMarks();
+        Invoke("SetTraj", 0.5f);
     }
     void SetMarks()
     {
@@ -66,5 +81,18 @@ public class BoomerangMove : MonoBehaviour
         mark1 = markStart + Vector3.Scale(trajectory, delta1);
         mark2 = mark1 + Vector3.Scale(trajectory, delta2);
         markEnd = mark1 + Vector3.Scale(trajectory, delta2);
+        Debug.Log("Marks: " + markStart + " | " + mark1 + " | " + mark2 + " | " + markEnd);
+    }
+    void Fall()
+    {
+        isThrown = false;
+        rb.useGravity = true;
+        rb.isKinematic = false;
+    }
+    void SetTraj()
+    {
+        trajectory = rb.linearVelocity;
+        rb.isKinematic = true;
+        SetMarks();
     }
 }
