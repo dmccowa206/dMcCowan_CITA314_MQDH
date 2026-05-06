@@ -4887,7 +4887,7 @@ Transform:
   m_GameObject: {fileID: 381768237}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 5}
+  m_LocalPosition: {x: 0, y: 1, z: 1.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21091,7 +21091,7 @@ MonoBehaviour:
   SpawnOnStart: 1
   MeshMaterial: {fileID: 2100000, guid: 599b01c5f1d17436c89b88cc04257314, type: 2}
   BarycentricCoordinatesEnabled: 0
-  Colliders: 1
+  Colliders: 0
   CutHoles: 303110
   castShadows: 1
   hideMesh: 0
@@ -34273,7 +34273,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116005517}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5178bc8574ce2bf4388e787a2e2af326, type: 3}
   m_Name: 

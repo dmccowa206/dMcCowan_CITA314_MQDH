@@ -6,8 +6,7 @@ public class SpawnBoomerang : MonoBehaviour
     [SerializeField] Transform boomerangSpawnLoc, pinSpawnLoc;
     [SerializeField] GameObject boomerangPrefab, pinPrefab;
     [SerializeField] ScoreKeeper scoreKeeper;
-    [SerializeField] Button rangBtn, pinBtn;
-    GameObject currentRang;
+    GameObject currentRang, currentPin;
     private void Start()
     {
         SpawnRang();
@@ -28,9 +27,14 @@ public class SpawnBoomerang : MonoBehaviour
     }
     public void SpawnPin()
     {
+        if(currentPin != null)
+        {
+            Destroy(currentPin);
+            currentPin = null;
+        }
         if (pinPrefab != null && pinSpawnLoc != null)
         {
-            Instantiate(pinPrefab,pinSpawnLoc);
+            currentPin = Instantiate(pinPrefab,pinSpawnLoc);
         }
     }
     void OnRangClick()

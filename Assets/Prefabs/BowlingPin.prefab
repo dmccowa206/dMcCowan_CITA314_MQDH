@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7165954223577682454}
   - component: {fileID: 192438893164322923}
+  - component: {fileID: 3534788286127355367}
   m_Layer: 3
   m_Name: BowlingPin
   m_TagString: Pin
@@ -31,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4829698208943156445}
+  - {fileID: 2484814677851470804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &192438893164322923
@@ -60,6 +62,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &3534788286127355367
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4024369823421517258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.065
+  m_Height: 0.4237015
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.0984547, z: 0}
 --- !u!1 &5501093784480706911
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,12 +112,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5501093784480706911}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 4829698208943156445}
+  m_Father: {fileID: 7165954223577682454}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &4385300204577236864
 MeshFilter:
@@ -170,7 +195,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -203,7 +228,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2484814677851470804}
+  m_Children: []
   m_Father: {fileID: 7165954223577682454}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
