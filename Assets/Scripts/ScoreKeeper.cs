@@ -5,6 +5,7 @@ public class ScoreKeeper : MonoBehaviour
 {
     [SerializeField] int score = 0;
     [SerializeField] TextMeshProUGUI scoreTxt;
+    [SerializeField] SpawnBoomerang spawner;
     bool canScore = true;
     public void GainScore()
     {
@@ -24,5 +25,9 @@ public class ScoreKeeper : MonoBehaviour
     public void ResetElligibility()
     {
         canScore = true;
+        if (spawner != null)
+        {
+            spawner.SpawnPin();
+        }
     }
 }

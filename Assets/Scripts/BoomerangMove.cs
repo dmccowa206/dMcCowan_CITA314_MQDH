@@ -13,11 +13,13 @@ public class BoomerangMove : MonoBehaviour
     bool loopCheck = false;
     Vector3 startLoc, invertTraj = new Vector3(-1,1,-1);
     [SerializeField] Transform player;
+    UIManager uiMan;
     private void Start()
     {
         scoreKeeper = FindAnyObjectByType<ScoreKeeper>();
         rb = GetComponent<Rigidbody>();
         player = FindFirstObjectByType<AudioListener>().gameObject.transform;
+        uiMan = FindAnyObjectByType<UIManager>();
     }
     void Update()
     {
@@ -53,38 +55,39 @@ public class BoomerangMove : MonoBehaviour
                 Vector3.Lerp(mark2, markEnd, t), t), t);
         gameObject.transform.position = pointInCurve;
     }
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Collision");
-        if(other.gameObject.CompareTag("Pin"))
-        {
-            Debug.Log("isPin");
-            scoreKeeper.GainScore();
-            rbOther = other.gameObject.GetComponent<Rigidbody>();
-            rbOther.isKinematic = false;
-            Destroy(other.gameObject, 3f);
-        }
-        else
-        {
-            Fall();
-        }
-    }
-    // private void OnTriggerEnter(Collider other)
+    // private void OnCollisionEnter(Collision other)
     // {
-    //     Debug.Log("Trigger");
+    //     Debug.Log("Collision: " + other.gameObject.name);
     //     if(other.gameObject.CompareTag("Pin"))
     //     {
-    //         Debug.Log("isPinTrigger");
+    //         Debug.Log("isPin");
     //         scoreKeeper.GainScore();
     //         rbOther = other.gameObject.GetComponent<Rigidbody>();
     //         rbOther.isKinematic = false;
-    //         Destroy(other.gameObject, 10f);
+    //         Destroy(other.gameObject, 3f);
     //     }
-    //     else
-    //     {
-    //         Fall();
-    //     }
+    //     // else
+    //     // {
+    //     //     Fall();
+    //     // }
     // }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Trigger");
+        if(other.gameObject.CompareTag("Pin"))
+        {
+            Debug.Log("isPinTrigger");
+            scoreKeeper.GainScore();
+            rbOther = other.gameObject.GetComponent<Rigidbody>();
+            rbOther.isKinematic = false;
+            rbOther.useGravity = true;
+            Destroy(other.gameObject, 3f);
+        }
+        // else
+        // {
+        //     Fall();
+        // }
+    }
     public void OnGrab()
     {
         Debug.Log("Grab");
@@ -92,6 +95,10 @@ public class BoomerangMove : MonoBehaviour
         isThrown = false;
         trajSet = false;
         scoreKeeper.ResetElligibility();
+        if (uiMan != null)
+        {
+            uiMan.ToggleUI(false);
+        }
     }
     public void OnThrow()
     {
@@ -134,6 +141,7 @@ public class BoomerangMove : MonoBehaviour
         rb.useGravity = true;
         rb.isKinematic = false;
         rb.AddForce(Vector3.Scale(trajectory, invertTraj));
+        Invoke("FailedReGrab", 3f);
     }
     void SetTraj()
     {
@@ -141,5 +149,12 @@ public class BoomerangMove : MonoBehaviour
         rb.isKinematic = true;
         trajSet = true;
         SetMarks();
+    }
+    void FailedReGrab()
+    {
+        if (uiMan != null && rb.isKinematic == false)
+        {
+            uiMan.ToggleUI(true);
+        }
     }
 }
